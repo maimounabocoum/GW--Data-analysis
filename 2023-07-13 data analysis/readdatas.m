@@ -1,14 +1,15 @@
 % scan of detuning of thermal state of atoms
 
 clearvars ;
-load('sweep_00000.mat');
+folderpath = 'Z:\SCI-NBI-quantop-data\data\gwd\atoms\2023-07-13 - scan probe volt_000\';
+load([folderpath,'scan probe volt_00000.mat']);
 %% 
 
 D = dev5456.demods.sample(1:30) ;
 
 for loop = 1:30
 %pat = "lambda " + digitsPattern(4) + ("a"|"b");
-pat = digitsPattern(3)+"."+digitsPattern(6) ;
+pat = digitsPattern(3)+"."+ digitsPattern(6) ;
 str = convertCharsToStrings(D{loop}.header.name)
 
 lambda_(loop) = str2double(extract(str,pat));

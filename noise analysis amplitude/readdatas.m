@@ -1,0 +1,126 @@
+%% read datas
+
+%% comparison of detector
+clearvars;
+
+Atoms = importdata('atoms.txt');
+AtomsBG = importdata('atoms background.txt');
+
+Repump = importdata('repump.txt');
+RepumpBG = importdata('repump background.txt');
+
+RepumpAOM = importdata('repump before AOM.txt');
+RepumpBGAOM = importdata('repump before AOM background.txt');
+
+figure(1);clf;
+subplot(311)
+title('AC Balanced Detector')
+plot(AtomsBG(:,1)*1e-3,AtomsBG(:,2),...
+    'DisplayName','Atoms BG'); hold on
+plot(Atoms(:,1)*1e-3,Atoms(:,2),...
+    'DisplayName','Atoms BG'); 
+grid on
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+subplot(312)
+title('AC Balanced Detector')
+plot(RepumpBG(:,1)*1e-3,RepumpBG(:,2),...
+    'DisplayName','Repump BG'); hold on
+plot(Repump(:,1)*1e-3,Repump(:,2),...
+    'DisplayName','Repump BG'); 
+grid on
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+subplot(313)
+title('Thorlabs Detector')
+plot(RepumpBGAOM(:,1)*1e-3,RepumpBGAOM(:,2),...
+    'DisplayName','Repump before AOM'); hold on
+plot(RepumpAOM(:,1)*1e-3,RepumpAOM(:,2),...
+    'DisplayName','Repump before AOM BG'); 
+grid on
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+
+set(findall(gcf,'-property','FontSize'),'FontSize',12)
+
+%% correlation of datas peaks
+
+figure(2); clf;
+title('AC Balanced Detector')
+plot(Atoms(:,1)*1e-3,Atoms(:,2),...
+    'DisplayName','Atoms'); hold on
+plot(Repump(:,1)*1e-3,Repump(:,2)-9.5,...
+    'DisplayName','Repump + 10dBm'); 
+ylim([-120 -80])
+xlim([3 25]); grid minor
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+set(findall(gcf,'-property','FontSize'),'FontSize',30)
+
+%% effect of the noise modulation
+clearvars; 
+
+AtomsMOD1 = importdata('atomsMOD1p2207e-03FREQ5p5kHz.txt');
+AtomsMOD2 = importdata('atomsMOD9p0332e-03FREQ5p5kHz.txt');
+AtomsMOD3 = importdata('atomsMOD3p1250e-02FREQ5p5kHz.txt');
+
+repumpMOD1 = importdata('repumpMOD1p2207e-03FREQ5p5kHz.txt');
+repumpMOD2 = importdata('repumpMOD9p0332e-03FREQ5p5kHz.txt');
+repumpMOD3 = importdata('repumpMOD3p1250e-02FREQ5p5kHz.txt');
+
+figure(3); clf;
+title('AC Balanced Detector')
+subplot(2,3,1)
+plot(AtomsMOD1(:,1)*1e-3,AtomsMOD1(:,2),...
+    'DisplayName','Atoms MOD1','LineWidth',3); hold on
+plot(repumpMOD1(:,1)*1e-3,repumpMOD1(:,2)-9.5,...
+    'DisplayName','Atoms MOD1','LineWidth',3); grid on
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+xlim([5 6])
+ylim([-110 -20])
+
+subplot(2,3,2)
+plot(AtomsMOD2(:,1)*1e-3,AtomsMOD2(:,2),...
+    'DisplayName','Atoms MOD2','LineWidth',3); hold on
+plot(repumpMOD2(:,1)*1e-3,repumpMOD2(:,2)-9.5,...
+    'DisplayName','Atoms MOD2','LineWidth',3); grid on
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+xlim([5 6])
+ylim([-110 -20])
+
+subplot(2,3,3)
+plot(AtomsMOD3(:,1)*1e-3,AtomsMOD3(:,2),...
+    'DisplayName','Atoms MOD3','LineWidth',3); hold on
+plot(repumpMOD3(:,1)*1e-3,repumpMOD3(:,2)-9.5,...
+    'DisplayName','Atoms MOD3','LineWidth',3); grid on
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+xlim([5 6])
+ylim([-110 -20])
+
+subplot(2,3,[4,6])
+plot(AtomsMOD1(:,1)*1e-3,AtomsMOD1(:,2),...
+    'DisplayName','Atoms MOD1','LineWidth',2); hold on
+plot(repumpMOD1(:,1)*1e-3,repumpMOD1(:,2)-9.5,...
+    'DisplayName','Atoms MOD1','LineWidth',3); grid on
+title('comparison on full spectrum')
+xlabel('frequency(kHz)')
+ylabel('dBm/Hz')
+legend;
+
+set(findall(gcf,'-property','FontSize'),'FontSize',25)
+%%
+
+
+
+
+
